@@ -877,9 +877,12 @@
 
     // ── DASHBOARD ──
     async function renderDashboard() {
+        const prevFilter = document.getElementById("month-filter").value;
         await fetchResponses();
         populateMonthFilter();
-        const filter = document.getElementById("month-filter").value;
+        const sel = document.getElementById("month-filter");
+        if ([...sel.options].some(o => o.value === prevFilter)) sel.value = prevFilter;
+        const filter = sel.value;
         let data = getResponses();
         if (filter !== "all") data = data.filter(r => r.month === filter);
 
